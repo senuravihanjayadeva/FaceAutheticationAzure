@@ -108,15 +108,19 @@ export default function LoginComponent() {
                         )
                         .then((res) => {
                           console.log(res.data.userName);
-                          localStorage.setItem("UserName", res.data.userName);
-                          window.location = "/user";
+                          if (!res.data) {
+                            alert("Authentication Failed..Try Again");
+                          } else {
+                            localStorage.setItem("UserName", res.data.userName);
+                            window.location = "/user";
+                          }
                         })
                         .catch((err) => {
                           alert(err);
                         });
                     })
                     .catch((err) => {
-                      alert(err);
+                      alert("Authentication Failed..Try Again");
                     });
                 })
                 .catch((err) => {
