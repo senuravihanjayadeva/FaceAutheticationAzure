@@ -102,7 +102,8 @@ export default function LoginComponent() {
 
                       axios
                         .get(
-                          "http://localhost:5000/users/" +
+                          process.env.REACT_APP_BACKEND_URL +
+                            "/users/" +
                             res.data[0].persistedFaceId
                         )
                         .then((res) => {

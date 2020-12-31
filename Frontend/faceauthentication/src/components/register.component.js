@@ -90,7 +90,10 @@ export default function RegisterComponent() {
                   };
 
                   axios
-                    .post("http://localhost:5000/users/add", newUserReg)
+                    .post(
+                      process.env.REACT_APP_BACKEND_URL + "/users/add",
+                      newUserReg
+                    )
                     .then(() => {
                       const configTrain = {
                         headers: {

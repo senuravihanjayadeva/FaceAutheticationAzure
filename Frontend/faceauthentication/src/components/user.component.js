@@ -9,7 +9,11 @@ export default function UserComponent() {
 
   return (
     <div className="container">
-      <h1>Hello {UserName}</h1>
+      <div style={{ margin: "10% 25%" }}>
+        <h1>Login Successful</h1>
+        <br />
+        <h1>Hello {UserName}</h1>
+      </div>
     </div>
   );
 }
