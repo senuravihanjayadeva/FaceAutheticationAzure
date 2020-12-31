@@ -8,7 +8,7 @@ export default function LoginComponent() {
   //states for webcam
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(
-    "https://www.clker.com/cliparts/Z/k/z/B/Q/d/blue-silhouette-man-hi.png"
+    "https://i.stack.imgur.com/l60Hf.png"
   );
 
   //states for send image to firebase
@@ -30,7 +30,6 @@ export default function LoginComponent() {
     e.preventDefault();
 
     if (imgSrc !== null) {
-      alert("clicked");
       const fileName = Math.floor(Math.random() * 100000 + 1) + ".jpg";
       const uploadTask = storage
         .ref(`facelogin/${fileName}`)
@@ -81,7 +80,7 @@ export default function LoginComponent() {
                     "Response for face detect is = " + response.data[0].faceId
                   );
                   setuserId(response.data[0].faceId);
-                  alert("Successfully Detect Face");
+                  alert("Face Detect Successfully");
 
                   const newUserLogin = {
                     faceId: response.data[0].faceId,
@@ -99,7 +98,7 @@ export default function LoginComponent() {
                     .then((res) => {
                       console.log(res.data[0].persistedFaceId);
 
-                      alert("Face Verify Successfull");
+                      alert("Face Verify Successfully");
 
                       axios
                         .get(
@@ -133,7 +132,7 @@ export default function LoginComponent() {
   return (
     <div className="container">
       <br />
-      <h1 className="text-center">Hexa Login </h1>
+      <h1 className="text-center">HexaAuth Login </h1>
       <br />
       <div className="row">
         <div className="col-md-6">
@@ -148,7 +147,7 @@ export default function LoginComponent() {
             <>
               {" "}
               <div class="form-group">
-                <img src={imgSrc} style={{ width: "80%" }} />{" "}
+                <img src={imgSrc} style={{ width: "300px" }} />{" "}
               </div>
               <br />
               <br />

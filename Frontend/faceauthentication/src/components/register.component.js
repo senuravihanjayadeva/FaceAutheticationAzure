@@ -8,7 +8,7 @@ export default function RegisterComponent() {
   //states for webcam
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(
-    "https://www.clker.com/cliparts/Z/k/z/B/Q/d/blue-silhouette-man-hi.png"
+    "https://i.stack.imgur.com/l60Hf.png"
   );
 
   //states for send image to firebase
@@ -31,7 +31,6 @@ export default function RegisterComponent() {
     e.preventDefault();
 
     if (imgSrc !== null) {
-      alert("clicked");
       const fileName = Math.floor(Math.random() * 100000 + 1) + ".jpg";
       const uploadTask = storage
         .ref(`faceauth/${fileName}`)
@@ -83,7 +82,7 @@ export default function RegisterComponent() {
                       response.data.persistedFaceId
                   );
                   setuserId(response.data.persistedFaceId);
-                  alert("Successfully Added to Large Face List");
+                  alert("Image added to Large Face List");
 
                   const newUserReg = {
                     userId: response.data.persistedFaceId,
@@ -99,7 +98,7 @@ export default function RegisterComponent() {
                             "a680691db6174916bb8819e75475a406",
                         },
                       };
-                      alert("user registered");
+                      alert("User Details sent to the Database");
                       axios
                         .post(
                           "https://eastus.api.cognitive.microsoft.com/face/v1.0/largefacelists/hexalist/train",
@@ -107,7 +106,7 @@ export default function RegisterComponent() {
                           configTrain
                         )
                         .then(() => {
-                          alert("Trained Successfully");
+                          alert("Dataset Trained Successfully");
                           window.location = "/";
                         })
                         .catch((err) => {
@@ -131,7 +130,9 @@ export default function RegisterComponent() {
 
   return (
     <div className="container">
-      <h1 className="text-center">Register</h1>
+      <br />
+      <h1 className="text-center">HexaAuth Register</h1>
+      <br />
       <div className="row">
         <div className="col-md-6">
           <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
@@ -145,7 +146,7 @@ export default function RegisterComponent() {
             <>
               {" "}
               <div class="form-group">
-                <img src={imgSrc} style={{ width: "80%" }} />{" "}
+                <img src={imgSrc} style={{ width: "300px" }} />{" "}
               </div>
               <br />
               <div class="form-group">
