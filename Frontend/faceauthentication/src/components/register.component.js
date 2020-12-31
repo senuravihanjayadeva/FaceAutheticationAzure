@@ -103,6 +103,7 @@ export default function RegisterComponent() {
                       axios
                         .post(
                           "https://eastus.api.cognitive.microsoft.com/face/v1.0/largefacelists/hexalist/train",
+                          "",
                           configTrain
                         )
                         .then(() => {
@@ -130,11 +131,13 @@ export default function RegisterComponent() {
 
   return (
     <div className="container">
-      <h1>Register</h1>
+      <h1 className="text-center">Register</h1>
       <div className="row">
         <div className="col-md-6">
           <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
-          <button onClick={capture}>Capture photo</button>
+          <button className="btn btn-warning" onClick={capture}>
+            Capture photo
+          </button>
         </div>
         <div className="col-md-6">
           {" "}
@@ -160,7 +163,9 @@ export default function RegisterComponent() {
                 <Progress percentage={uploadPercentage} />
               </div>
               <br />
-              <button onClick={uploadImage}>Register</button>
+              <button className="btn btn-success" onClick={uploadImage}>
+                Register
+              </button>
             </>
           )}
         </div>

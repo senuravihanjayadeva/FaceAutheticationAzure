@@ -134,10 +134,13 @@ export default function LoginComponent() {
     <div className="container">
       <br />
       <h1 className="text-center">Hexa Login </h1>
+      <br />
       <div className="row">
         <div className="col-md-6">
           <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
-          <button onClick={capture}>Capture photo</button>
+          <button className="btn btn-warning" onClick={capture}>
+            Capture photo
+          </button>
         </div>
         <div className="col-md-6">
           {" "}
@@ -153,7 +156,9 @@ export default function LoginComponent() {
                 <Progress percentage={uploadPercentage} />
               </div>
               <br />
-              <button onClick={uploadImage}>Register</button>
+              <button className="btn btn-primary" onClick={uploadImage}>
+                Login
+              </button>
             </>
           )}
         </div>
