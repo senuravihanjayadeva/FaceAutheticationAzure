@@ -16,6 +16,10 @@ export default function RegisterComponent() {
   const [imageURL, setImageURL] = useState("");
   const [uploadPercentage, setuploadPercentage] = useState(0);
 
+  //states for send backend data
+  const [userId, setuserId] = useState("");
+  const [userName, setuserName] = useState("");
+
   //method for capture an image
   const capture = React.useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -78,7 +82,40 @@ export default function RegisterComponent() {
                     "Response for LargeFaceList is = " +
                       response.data.persistedFaceId
                   );
+                  setuserId(response.data.persistedFaceId);
                   alert("Successfully Added to Large Face List");
+
+                  const newUserReg = {
+                    userId: response.data.persistedFaceId,
+                    userName: userName,
+                  };
+
+                  axios
+                    .post("http://localhost:5000/users/add", newUserReg)
+                    .then(() => {
+                      const configTrain = {
+                        headers: {
+                          "Ocp-Apim-Subscription-Key":
+                            "a680691db6174916bb8819e75475a406",
+                        },
+                      };
+                      alert("user registered");
+                      axios
+                        .post(
+                          "https://eastus.api.cognitive.microsoft.com/face/v1.0/largefacelists/hexalist/train",
+                          configTrain
+                        )
+                        .then(() => {
+                          alert("Trained Successfully");
+                          window.location = "/";
+                        })
+                        .catch((err) => {
+                          alert(err);
+                        });
+                    })
+                    .catch((err) => {
+                      alert(err);
+                    });
                 })
                 .catch((err) => {
                   alert(err.message);
@@ -113,6 +150,9 @@ export default function RegisterComponent() {
                   type="text"
                   className="form-control"
                   placeholder="Enter Your Name"
+                  onChange={(e) => {
+                    setuserName(e.target.value);
+                  }}
                 />
               </div>
               <br />
