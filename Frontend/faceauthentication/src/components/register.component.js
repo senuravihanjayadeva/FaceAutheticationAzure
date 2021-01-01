@@ -10,7 +10,8 @@ import "./style.css";
 
 export default function RegisterComponent() {
   //states for webcam
-  const webcamRef = React.useRef(null);
+  const webcamRefMobile = React.useRef(null);
+  const webcamRefDesktop = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(
     "https://i.stack.imgur.com/l60Hf.png"
   );
@@ -25,12 +26,19 @@ export default function RegisterComponent() {
   const [userName, setuserName] = useState("");
   const [StateOfProcess, setStateOfProcess] = useState("");
 
-  //method for capture an image
-  const capture = React.useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
+  //method for capture an image Destop
+  const captureDesktop = React.useCallback(() => {
+    const imageSrc = webcamRefDesktop.current.getScreenshot();
     setImgSrc(imageSrc);
     //console.log(imageSrc);
-  }, [webcamRef, setImgSrc]);
+  }, [webcamRefDesktop, setImgSrc]);
+
+  //method for capture an image Mobile
+  const captureMobile = React.useCallback(() => {
+    const imageSrc = webcamRefMobile.current.getScreenshot();
+    setImgSrc(imageSrc);
+    //console.log(imageSrc);
+  }, [webcamRefMobile, setImgSrc]);
 
   function uploadImage(e) {
     e.preventDefault();
@@ -156,8 +164,12 @@ export default function RegisterComponent() {
       <br />
       <div className="row">
         <div className="col-md-6 DestopView">
-          <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
-          <button className="btn btn-warning" onClick={capture}>
+          <Webcam
+            audio={false}
+            ref={webcamRefDesktop}
+            screenshotFormat="image/jpeg"
+          />
+          <button className="btn btn-warning" onClick={captureDesktop}>
             Capture photo
           </button>
         </div>
@@ -165,12 +177,12 @@ export default function RegisterComponent() {
         <div className="col-md-6 MobileView">
           <Webcam
             audio={false}
-            ref={webcamRef}
+            ref={webcamRefMobile}
             width={300}
             height={400}
             screenshotFormat="image/jpeg"
           />
-          <button className="btn btn-warning" onClick={capture}>
+          <button className="btn btn-warning" onClick={captureMobile}>
             Capture photo
           </button>
           <br /> <br />
@@ -208,6 +220,7 @@ export default function RegisterComponent() {
                   <button className="btn btn-success" onClick={uploadImage}>
                     Register
                   </button>
+                  <br /> <br />
                 </>
               )}
             </div>
