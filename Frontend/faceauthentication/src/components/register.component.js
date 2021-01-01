@@ -6,6 +6,8 @@ import Progress from "./Progress";
 
 import NavbarComponent from "./navbar.component";
 
+import "./style.css";
+
 export default function RegisterComponent() {
   //states for webcam
   const webcamRef = React.useRef(null);
@@ -141,15 +143,39 @@ export default function RegisterComponent() {
     <div className="container">
       <NavbarComponent />
       <br />
-      <h1 className="text-center">HexaAuth Register</h1>
+      <h1
+        className="text-center"
+        style={{
+          backgroundColor: "#333399",
+          color: "#ffffff",
+          padding: "10px",
+        }}
+      >
+        HEXAAUTH REGISTER
+      </h1>
       <br />
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-6 DestopView">
           <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
           <button className="btn btn-warning" onClick={capture}>
             Capture photo
           </button>
         </div>
+
+        <div className="col-md-6 MobileView">
+          <Webcam
+            audio={false}
+            ref={webcamRef}
+            width={300}
+            height={400}
+            screenshotFormat="image/jpeg"
+          />
+          <button className="btn btn-warning" onClick={capture}>
+            Capture photo
+          </button>
+          <br /> <br />
+        </div>
+
         <div className="col-md-6">
           <div className="row">
             <div className="col-md-12">

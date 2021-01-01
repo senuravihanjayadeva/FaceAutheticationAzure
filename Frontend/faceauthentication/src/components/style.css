@@ -1,0 +1,17 @@
+.DestopView {
+  display: block;
+}
+
+.MobileView {
+  display: none;
+}
+
+@media screen and (max-width: 400px) {
+  .DestopView {
+    display: none;
+  }
+
+  .MobileView {
+    display: block;
+  }
+}
