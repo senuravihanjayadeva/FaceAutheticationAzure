@@ -4,6 +4,8 @@ import axios from "axios";
 import { storage } from "../firebase";
 import Progress from "./Progress";
 
+import NavbarComponent from "./navbar.component";
+
 export default function LoginComponent() {
   //states for webcam
   const webcamRef = React.useRef(null);
@@ -147,6 +149,7 @@ export default function LoginComponent() {
 
   return (
     <div className="container">
+      <NavbarComponent />
       <br />
       <h1 className="text-center">HexaAuth Login </h1>
       <br />

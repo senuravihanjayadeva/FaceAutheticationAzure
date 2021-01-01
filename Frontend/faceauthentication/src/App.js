@@ -10,7 +10,6 @@ import NavbarComponent from "./components/navbar.component";
 function App() {
   return (
     <div className="container">
-      <NavbarComponent />
       <Router>
         <Route path="/" exact component={LoginComponent} />
         <Route path="/register" exact component={RegisterComponent} />

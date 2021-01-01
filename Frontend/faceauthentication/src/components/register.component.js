@@ -1,8 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Webcam from "react-webcam";
 import axios from "axios";
 import { storage } from "../firebase";
 import Progress from "./Progress";
+
+import NavbarComponent from "./navbar.component";
 
 export default function RegisterComponent() {
   //states for webcam
@@ -137,6 +139,7 @@ export default function RegisterComponent() {
 
   return (
     <div className="container">
+      <NavbarComponent />
       <br />
       <h1 className="text-center">HexaAuth Register</h1>
       <br />
