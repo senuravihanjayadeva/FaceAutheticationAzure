@@ -19,6 +19,7 @@ export default function RegisterComponent() {
   //states for send backend data
   const [userId, setuserId] = useState("");
   const [userName, setuserName] = useState("");
+  const [StateOfProcess, setStateOfProcess] = useState("");
 
   //method for capture an image
   const capture = React.useCallback(() => {
@@ -82,7 +83,8 @@ export default function RegisterComponent() {
                       response.data.persistedFaceId
                   );
                   setuserId(response.data.persistedFaceId);
-                  alert("Image added to Large Face List");
+                  //alert("Image added to Large Face List");
+                  setStateOfProcess("Processing...");
 
                   const newUserReg = {
                     userId: response.data.persistedFaceId,
@@ -101,7 +103,8 @@ export default function RegisterComponent() {
                             "a680691db6174916bb8819e75475a406",
                         },
                       };
-                      alert("User Details sent to the Database");
+                      //alert("User Details sent to the Database");
+                      setStateOfProcess("Processing...");
                       axios
                         .post(
                           "https://eastus.api.cognitive.microsoft.com/face/v1.0/largefacelists/hexalist/train",
@@ -109,7 +112,8 @@ export default function RegisterComponent() {
                           configTrain
                         )
                         .then(() => {
-                          alert("Dataset Trained Successfully");
+                          //alert("Dataset Trained Successfully");
+                          setStateOfProcess("Account Created...");
                           window.location = "/";
                         })
                         .catch((err) => {
@@ -144,34 +148,41 @@ export default function RegisterComponent() {
           </button>
         </div>
         <div className="col-md-6">
-          {" "}
-          {imgSrc && (
-            <>
+          <div className="row">
+            <div className="col-md-12">
+              <h3 style={{ color: "red" }}>{StateOfProcess}</h3>
+            </div>
+            <div className="col-md-12">
               {" "}
-              <div class="form-group">
-                <img src={imgSrc} style={{ width: "300px" }} />{" "}
-              </div>
-              <br />
-              <div class="form-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter Your Name"
-                  onChange={(e) => {
-                    setuserName(e.target.value);
-                  }}
-                />
-              </div>
-              <br />
-              <div class="form-group">
-                <Progress percentage={uploadPercentage} />
-              </div>
-              <br />
-              <button className="btn btn-success" onClick={uploadImage}>
-                Register
-              </button>
-            </>
-          )}
+              {imgSrc && (
+                <>
+                  {" "}
+                  <div class="form-group">
+                    <img src={imgSrc} style={{ width: "300px" }} />{" "}
+                  </div>
+                  <br />
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter Your Name"
+                      onChange={(e) => {
+                        setuserName(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <br />
+                  <div class="form-group">
+                    <Progress percentage={uploadPercentage} />
+                  </div>
+                  <br />
+                  <button className="btn btn-success" onClick={uploadImage}>
+                    Register
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

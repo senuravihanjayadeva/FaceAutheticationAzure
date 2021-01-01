@@ -18,6 +18,7 @@ export default function LoginComponent() {
 
   //states for send backend data
   const [userId, setuserId] = useState("");
+  const [StateOfProcess, setStateOfProcess] = useState("");
 
   //method for capture an image
   const capture = React.useCallback(() => {
@@ -26,7 +27,7 @@ export default function LoginComponent() {
     //console.log(imageSrc);
   }, [webcamRef, setImgSrc]);
 
-  function uploadImage(e) {
+  async function uploadImage(e) {
     e.preventDefault();
 
     if (imgSrc !== null) {
@@ -75,12 +76,13 @@ export default function LoginComponent() {
                   newImageDetails,
                   config
                 )
-                .then((response) => {
+                .then(async (response) => {
                   console.log(
                     "Response for face detect is = " + response.data[0].faceId
                   );
                   setuserId(response.data[0].faceId);
-                  alert("Face Detect Successfully");
+                  //alert("Face Detect Successfully");
+                  setStateOfProcess("Processing Your Face.....");
 
                   const newUserLogin = {
                     faceId: response.data[0].faceId,
@@ -89,7 +91,7 @@ export default function LoginComponent() {
                     mode: "matchPerson",
                   };
 
-                  axios
+                  await axios
                     .post(
                       "https://eastus.api.cognitive.microsoft.com/face/v1.0/findsimilars",
                       newUserLogin,
@@ -98,7 +100,8 @@ export default function LoginComponent() {
                     .then((res) => {
                       console.log(res.data[0].persistedFaceId);
 
-                      alert("Face Verify Successfully");
+                      //alert("Face Verify Successfully");
+                      setStateOfProcess("Please Wait...");
 
                       axios
                         .get(
@@ -109,18 +112,26 @@ export default function LoginComponent() {
                         .then((res) => {
                           console.log(res.data.userName);
                           if (!res.data) {
-                            alert("Authentication Failed..Try Again");
+                            //alert("Authentication Failed..Try Again");
+                            setStateOfProcess(
+                              "Authentication Failed..Try Again..."
+                            );
                           } else {
+                            localStorage.setItem("UserID", res.data.userId);
                             localStorage.setItem("UserName", res.data.userName);
                             window.location = "/user";
                           }
                         })
-                        .catch((err) => {
-                          alert(err);
+                        .catch(() => {
+                          //alert("Authentication Failed..Try Again");
+                          setStateOfProcess(
+                            "Authentication Failed..Try Again..."
+                          );
                         });
                     })
-                    .catch((err) => {
-                      alert("Authentication Failed..Try Again");
+                    .catch(() => {
+                      //alert("Authentication Failed..Try Again");
+                      setStateOfProcess("Authentication Failed..Try Again...");
                     });
                 })
                 .catch((err) => {
@@ -147,24 +158,31 @@ export default function LoginComponent() {
           </button>
         </div>
         <div className="col-md-6">
-          {" "}
-          {imgSrc && (
-            <>
-              {" "}
-              <div class="form-group">
-                <img src={imgSrc} style={{ width: "300px" }} />{" "}
-              </div>
-              <br />
-              <br />
-              <div class="form-group">
-                <Progress percentage={uploadPercentage} />
-              </div>
-              <br />
-              <button className="btn btn-primary" onClick={uploadImage}>
-                Login
-              </button>
-            </>
-          )}
+          <div className="row">
+            <div className="col-md-12">
+              <h3 style={{ color: "red" }}>{StateOfProcess}</h3>
+            </div>
+
+            <div className="col-md-12">
+              {imgSrc && (
+                <>
+                  {" "}
+                  <div class="form-group">
+                    <img src={imgSrc} style={{ width: "300px" }} />{" "}
+                  </div>
+                  <br />
+                  <br />
+                  <div class="form-group">
+                    <Progress percentage={uploadPercentage} />
+                  </div>
+                  <br />
+                  <button className="btn btn-primary" onClick={uploadImage}>
+                    Login
+                  </button>
+                </>
+              )}
+            </div>
+          </div>{" "}
         </div>
       </div>
     </div>
